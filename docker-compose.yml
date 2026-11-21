@@ -1,0 +1,35 @@
+# Production-like stack: PostgreSQL server + API (which also serves the React app).
+# Every college the platform admin creates becomes its own PostgreSQL database
+# (college_<code>) on the "db" server.
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: college_master
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 10
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      Database__Provider: PostgreSql
+      Database__MasterConnectionString: Host=db;Port=5432;Database=college_master;Username=postgres;Password=postgres
+      Database__TenantServerConnectionString: Host=db;Port=5432;Database=postgres;Username=postgres;Password=postgres
+      Jwt__Secret: ${JWT_SECRET:-please-change-this-to-a-long-random-secret-value}
+      Bootstrap__SuperAdminEmail: ${SUPERADMIN_EMAIL:-admin@platform.local}
+      Bootstrap__SuperAdminPassword: ${SUPERADMIN_PASSWORD:-Admin@12345}
+
+volumes:
+  pgdata:

@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CollegeErp.Api/CollegeErp.Api.csproj" />
+    <Project Path="src/CollegeErp.Application/CollegeErp.Application.csproj" />
+    <Project Path="src/CollegeErp.Domain/CollegeErp.Domain.csproj" />
+    <Project Path="src/CollegeErp.Infrastructure/CollegeErp.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CollegeErp.IntegrationTests/CollegeErp.IntegrationTests.csproj" />
+  </Folder>
+</Solution>

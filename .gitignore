@@ -1,0 +1,13 @@
+# .NET
+bin/
+obj/
+*.user
+.vs/
+# Runtime data (SQLite databases)
+**/data/
+# Frontend
+node_modules/
+dist/
+.env
+# Built SPA copied into the API
+backend/src/CollegeErp.Api/wwwroot/
